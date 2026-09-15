@@ -194,7 +194,7 @@ def verify(s: dict) -> dict:  # 예외 처리 정책: 재생성 없이 스킵 �
                     + (f" · 불합격 {[x['source'] for x in dropped]}" if dropped else "")]}
 
 
-DISCORD_USERNAME = "나만의뉴스레터봇"
+DISCORD_USERNAME = "Isaac-AI뉴스레터"
 
 
 def _email_recipients():
