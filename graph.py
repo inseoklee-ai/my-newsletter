@@ -266,13 +266,14 @@ def send_email(run_id, lead, articles, recipients, dry_run):  # -> "sent"|"dry_r
         print("발행(Email): 건너뜀 — GMAIL_ADDRESS/GMAIL_APP_PASSWORD 미설정")
         return "skipped"
     import smtplib
-    from email.mime.text import MIMEText
-    msg = MIMEText(body, "plain", "utf-8")
+    from email.message import EmailMessage  # 유니코드 헤더/본문을 자동으로 안전하게 인코딩한다
+    msg = EmailMessage()
     msg["Subject"], msg["From"], msg["To"] = f"[AI 스터디 브리핑] {run_id}", sender, ", ".join(recipients)
+    msg.set_content(body)
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as smtp:
             smtp.login(sender, password)
-            smtp.sendmail(sender, recipients, msg.as_string())
+            smtp.send_message(msg)
         print("발행(Email): 성공")
         return "sent"
     except Exception as e:
