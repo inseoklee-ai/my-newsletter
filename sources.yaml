@@ -1,0 +1,37 @@
+# 수집 소스 목록. 여기 한 줄 추가/삭제하는 것만으로 수집 대상이 바뀐다.
+# name는 기사의 "source" 필드로, url은 RSS 주소로 그대로 쓰인다.
+#
+# 채택 근거(2026-09-15 실측, G1 본문/G2 생존/G3 접근 관문 통과):
+#   - 전자신문 AI/보안, ZDNet Korea: 국내 기업·정책·보안 동향, 1~2h 이내 갱신
+#   - 보안뉴스: AI 보안 뉴스
+#   - arXiv cs.CL / cs.CR / quant-ph: LLM·보안·양자컴퓨터 연구 초록, 매일 갱신
+#   - Ars Technica AI: 해외 산업·사회 이슈
+#   - Quantum Zeitgeist, The Quantum Insider: 양자컴퓨터 전문 매체
+#
+# 탈락(사유):
+#   - 전자신문 중기/벤처: G2(생존) 실패 — 최신 글이 82일 전
+#   - TechCrunch AI: 과제 제외 목록에 포함된 소스
+#   - VentureBeat AI: G2(생존) 실패 — 최신 글이 18일 전
+#   - BleepingComputer: G3(접근) 실패 — 403 차단
+#   - Dark Reading: G1(본문) 실패 — 3건 중 0건만 본문 600자 이상 추출됨
+sources:
+  - name: "전자신문 AI"
+    url: "http://rss.etnews.com/04046.xml"
+  - name: "전자신문 보안"
+    url: "http://rss.etnews.com/04045.xml"
+  - name: "ZDNet Korea"
+    url: "https://feeds.feedburner.com/zdkorea"
+  - name: "보안뉴스"
+    url: "https://www.boannews.com/rss/allArticle.xml"
+  - name: "arXiv cs.CL"
+    url: "http://export.arxiv.org/rss/cs.CL"
+  - name: "arXiv cs.CR"
+    url: "http://export.arxiv.org/rss/cs.CR"
+  - name: "arXiv quant-ph"
+    url: "http://export.arxiv.org/rss/quant-ph"
+  - name: "Ars Technica AI"
+    url: "https://arstechnica.com/ai/feed/"
+  - name: "Quantum Zeitgeist"
+    url: "https://quantumzeitgeist.com/feed/"
+  - name: "The Quantum Insider"
+    url: "https://thequantuminsider.com/feed/"
