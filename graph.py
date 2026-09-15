@@ -269,7 +269,8 @@ def send_email(run_id, lead, articles, recipients, dry_run):  # -> "sent"|"dry_r
     from email.message import EmailMessage  # 유니코드 헤더/본문을 자동으로 안전하게 인코딩한다
     msg = EmailMessage()
     msg["Subject"], msg["From"], msg["To"] = f"[AI 스터디 브리핑] {run_id}", sender, ", ".join(recipients)
-    msg.set_content(body)
+    msg.set_content(body, cte="base64")  # RSS 원문에 섞인 눈에 안 보이는 유니코드 공백 등으로
+                                          # 인코딩이 깨지는 것을 막기 위해 항상 base64로 강제
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as smtp:
             smtp.login(sender, password)
