@@ -100,6 +100,9 @@ GitHub Actions에서 실제로 발행 성공한 실행: https://github.com/inseo
 이 실행으로 Discord(`#뉴스레터-에이전트`), 이메일 3명, 텔레그램 개인 채팅에 실제로
 브리핑이 도착한 것을 직접 확인했다. *(제출 시 각 채널에 도착한 화면 캡처를 이 아래에
 붙여 넣을 것.)*
+<img width="1897" height="862" alt="image" src="https://github.com/user-attachments/assets/29095053-34b0-477b-88bc-3c0f3bdaaaa2" />
+<img width="581" height="847" alt="image" src="https://github.com/user-attachments/assets/56593a06-2354-4344-addd-530e9dd3775b" />
+
 
 ## 6. 프로젝트 회고
 
