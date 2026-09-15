@@ -48,13 +48,15 @@ uv run python run.py             # 실제 발행 (Discord+Email+Telegram)
 ```
 
 필요한 환경변수: `OPENAI_API_KEY`, `DISCORD_WEBHOOK_URL`, `GMAIL_ADDRESS`,
-`GMAIL_APP_PASSWORD`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. 로컬에서는 이 프로젝트
-전용 `.env` 대신 `~/projects/keys.env`(다른 프로젝트와 공유하는 키 파일)를 셸에 로드해서 쓴다.
+`GMAIL_APP_PASSWORD`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `EMAIL_RECIPIENTS`
+(쉼표로 구분한 이메일 목록 — 개인정보라 코드에 넣지 않고 반드시 환경변수로만 관리한다).
+로컬에서는 이 프로젝트 전용 `.env` 대신 `~/projects/keys.env`(다른 프로젝트와 공유하는
+키 파일, git 추적 대상 아님)를 셸에 로드해서 쓴다.
 
 ## GitHub Actions 배포
 
 `.github/workflows/daily.yml`이 매일 자동 실행한다. Settings → Secrets and variables →
-Actions에 위 6개 환경변수를 등록해야 한다(코드에는 절대 적지 않는다). 수동 실행은 Actions
+Actions에 위 7개 환경변수를 등록해야 한다(코드에는 절대 적지 않는다). 수동 실행은 Actions
 탭 → "매일 브리핑" → Run workflow (`dry_run` 체크박스로 실제 발행 여부 선택).
 
 ## 이 패턴을 다른 분야로 다시 쓰려면
@@ -65,8 +67,9 @@ Actions에 위 6개 환경변수를 등록해야 한다(코드에는 절대 적�
    (측정 스크립트는 이 대화 기록에 남아 있고, 패턴은 `sources.yaml` 주석 참고)
 3. **`audience.yaml`/`sources.yaml`만 새로 쓴다** — `graph.py`는 그대로 두는 게 원칙이다.
    프롬프트나 소스 목록이 코드에 다시 박히기 시작하면 구조가 무너진다.
-4. **발행 채널의 수신자/사용자명만 바꾼다** — `graph.py`의 `EMAIL_RECIPIENTS`,
-   `DISCORD_USERNAME` 정도만 프로젝트별로 다르면 된다.
+4. **발행 채널의 수신자/사용자명만 바꾼다** — `EMAIL_RECIPIENTS`(환경변수)와
+   `graph.py`의 `DISCORD_USERNAME` 정도만 프로젝트별로 다르면 된다. 수신자 이메일처럼
+   개인정보가 섞인 값은 절대 코드에 하드코딩하지 않는다 — 공개 저장소면 그대로 노출된다.
 5. **묶음 크기(BATCH)는 후보 규모를 보고 정한다** — 후보가 하루 수백 건이면 40/8 같은 값을,
    수십 건이면 더 작게 가도 된다. 예선 통과 건수(`픽 → 예선 N → 최종 5`)가 로그에 남으니
    실제로 얼마나 좁혀지는지 보고 조정하면 된다.

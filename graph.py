@@ -194,8 +194,12 @@ def verify(s: dict) -> dict:  # 예외 처리 정책: 재생성 없이 스킵 �
                     + (f" · 불합격 {[x['source'] for x in dropped]}" if dropped else "")]}
 
 
-EMAIL_RECIPIENTS = ["lis2983@gmail.com", "cyphrus101@gmail.com", "yjj890@hanmail.net"]
 DISCORD_USERNAME = "나만의뉴스레터봇"
+
+
+def _email_recipients():
+    raw = os.environ.get("EMAIL_RECIPIENTS", "")
+    return [addr.strip() for addr in raw.split(",") if addr.strip()]
 
 
 def make_lead(arts):
@@ -262,8 +266,8 @@ def send_email(run_id, lead, articles, recipients, dry_run):  # -> "sent"|"dry_r
         print(f"[dry-run:email] 수신자 {len(recipients)}명 · {len(body)}자 — 보내지 않음")
         return "dry_run"
     sender, password = os.environ.get("GMAIL_ADDRESS"), os.environ.get("GMAIL_APP_PASSWORD")
-    if not sender or not password:
-        print("발행(Email): 건너뜀 — GMAIL_ADDRESS/GMAIL_APP_PASSWORD 미설정")
+    if not sender or not password or not recipients:
+        print("발행(Email): 건너뜀 — GMAIL_ADDRESS/GMAIL_APP_PASSWORD/EMAIL_RECIPIENTS 미설정")
         return "skipped"
     import smtplib
     from email.message import EmailMessage  # 유니코드 헤더/본문을 자동으로 안전하게 인코딩한다
@@ -307,7 +311,7 @@ def publish(s: dict) -> dict:
     lead = make_lead(arts)
 
     d = send_discord(today, lead, arts, os.environ.get("DISCORD_WEBHOOK_URL"), dry_run)
-    e = send_email(today, lead, arts, EMAIL_RECIPIENTS, dry_run)
+    e = send_email(today, lead, arts, _email_recipients(), dry_run)
     t = send_telegram(today, lead, arts, dry_run)
 
     label = f"{len(arts)}건" if arts else "조용합니다"
